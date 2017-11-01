@@ -1,6 +1,16 @@
-function rollDice(players){
-  players.roll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
-  return players;
+function coinToss(pigDice){
+  var toss = Math.random();
+  if (toss > 0.5) {
+    pigDice.turn = 'player1';
+  } else {
+    pigDice.turn = 'player2';
+  }
+  return pigDice;
+}
+
+function rollDice(pigDice){
+  pigDice.roll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
+  return pigDice;
 }
 
 function Player(playerName){
@@ -8,73 +18,75 @@ function Player(playerName){
   this.score = 0;
 }
 
-function endTurn(players){
-  if (players.turn === 'player1'){
-    players.turn = 'player2';
+function endTurn(pigDice){
+  if (pigDice.turn === 'player1'){
+    pigDice.turn = 'player2';
   } else {
-    players.turn = 'player1';
+    pigDice.turn = 'player1';
   }
-  return players;
+  return pigDice;
 }
 
-function playGame(players, clickedRollOrHold){
+function playGame(pigDice, clickedRollOrHold){
   if (clickedRollOrHold === 'roll') {
-    players = rollDice(players);
-    if (players.roll > 1) {
-      players.tempScore += players.roll;
+    pigDice = rollDice(pigDice);
+    if (pigDice.roll > 1) {
+      pigDice.tempScore += pigDice.roll;
     } else {
-      players.tempScore = 0;
-      players = endTurn(players);
+      pigDice.tempScore = 0;
+      pigDice = endTurn(pigDice);
     }
   }
   if (clickedRollOrHold === 'hold') {
-    var currPlayer = players.turn;
-    players[currPlayer].score += players.tempScore;
-    players.tempScore = 0;
-    players = endTurn(players);
-    console.log(players);
-    console.log(players[currPlayer].score);
+    var currPlayer = pigDice.turn;
+    pigDice[currPlayer].score += pigDice.tempScore;
+    pigDice.tempScore = 0;
+    pigDice = endTurn(pigDice);
+    console.log(pigDice);
+    console.log(pigDice[currPlayer].score);
   }
-  return players;
+  return pigDice;
 }
 
 // FRONT END
 
 $(function(){
-  var players = {};
+  var pigDice = {};
   var clickedRollOrHold;
   $("button#play-button").click(function(){
-    players = {};
+    pigDice = {};
     var player1Name = $("#player-1-name-input").val();
     var player2Name = $("#player-2-name-input").val();
     $('span#player-1-name-span').text(player1Name);
     $('span#player-2-name-span').text(player2Name);
-    players.player1 = new Player(player1Name);
-    players.player2 = new Player(player2Name);
-    players.turn = 'player1';
-    players.tempScore = 0;
-    players.roll = 0;
+    pigDice.player1 = new Player(player1Name);
+    pigDice.player2 = new Player(player2Name);
+    pigDice.roll = 0;
+    pigDice.tempScore = 0;
+    coinToss(pigDice);
+    var currPlayer = pigDice.turn;
+    $('#current-player-span').text(pigDice[currPlayer].name);
     $(".to-show").show();
     $(".to-hide").hide();
   });
   $("button#roll-button").click(function(){
     clickedRollOrHold = 'roll';
-    players = playGame(players, clickedRollOrHold);
-    $('#player-1-score-span').text(players.player1.score);
-    $('#player-2-score-span').text(players.player2.score);
-    $('#temp-score-span').text(players.tempScore);
-    var currPlayer = players.turn;
-    $('#current-player-span').text(players[currPlayer].name);
-    $('#current-roll-span').text(players.roll);
+    pigDice = playGame(pigDice, clickedRollOrHold);
+    $('#player-1-score-span').text(pigDice.player1.score);
+    $('#player-2-score-span').text(pigDice.player2.score);
+    $('#temp-score-span').text(pigDice.tempScore);
+    var currPlayer = pigDice.turn;
+    $('#current-player-span').text(pigDice[currPlayer].name);
+    $('#current-roll-span').text(pigDice.roll);
   });
   $("button#hold-button").click(function(){
     clickedRollOrHold = 'hold';
-    players = playGame(players, clickedRollOrHold);
-    $('#player-1-score-span').text(players.player1.score);
-    $('#player-2-score-span').text(players.player2.score);
-    $('#temp-score-span').text(players.tempScore);
-    var currPlayer = players.turn;
-    $('#current-player-span').text(players[currPlayer].name);
-    $('#current-roll-span').text(players.roll);
+    pigDice = playGame(pigDice, clickedRollOrHold);
+    $('#player-1-score-span').text(pigDice.player1.score);
+    $('#player-2-score-span').text(pigDice.player2.score);
+    $('#temp-score-span').text(pigDice.tempScore);
+    var currPlayer = pigDice.turn;
+    $('#current-player-span').text(pigDice[currPlayer].name);
+    $('#current-roll-span').text(pigDice.roll);
   });
 });
