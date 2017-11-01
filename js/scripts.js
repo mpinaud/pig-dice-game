@@ -3,22 +3,19 @@ function rollDice(){
   return randomRoll;
 }
 
-function roll(){
-
-}
-
 function Player(playerName){
   this.name = playerName;
   this.score = 0;
+  this.tempScore = 0;
 }
 
-function endTurn(turn){
-  if (turn = 0){
-    turn = 1;
+function endTurn(players){
+  if (players.turn = 'player1'){
+    players.turn = 'player2';
   } else {
-    turn = 0;
+    players.turn = 'player1';
   }
-  return turn;
+  return players;
 }
 
 function playGame(players, clickedRollOrHold){
@@ -26,32 +23,30 @@ function playGame(players, clickedRollOrHold){
   if (clickedRollOrHold === 'roll') {
     var numberRolled = rollDice();
     if (numberRolled > 1) {
-      players[currentPlayer].score += numberRolled;
+      players[currentPlayer].tempScore += numberRolled;
     } else {
-      tempScore = 0;
-      endTurn(turn);
+      players[currentPlayer].tempScore = 0;
+      players = endTurn(players);
     }
-  } else {
-
   }
-  var keepPlaying = true;
-  while (keepPlaying){
-    players.forEach(function(player){
-      if (player.score >= 100) {
-        keepPlaying = false;
-        alert(player.name + ' Wins!');
-      }
-    });
+  if (clickedRollOrHold === 'hold') {
+    players[currentPlayer].score += players[currentPlayer].tempScore;
+    players[currentPlayer].tempScore = 0;
+    players = endTurn(players);
   }
 }
+
+// FRONT END
 
 $(function(){
   var players;
   var clickedRollOrHold;
-  $("button#name-button").click(function(){
+  $("button#play-button").click(function(){
     players = {};
     var player1Name = $("#player-1-name-input").val();
     var player2Name = $("#player-2-name-input").val();
+    $('span#player-1-name-span').text(player1Name);
+    $('span#player-2-name-span').text(player2Name);
     players.player1 = new Player(player1Name);
     players.player2 = new Player(player2Name);
     players.turn = 'player1';
@@ -63,10 +58,11 @@ $(function(){
   });
   $("button#roll-button").click(function(){
     clickedRollOrHold = 'roll';
-    playGame(players, clickedRollOrHold);
+    players = playGame(players, clickedRollOrHold);
+
   });
   $("button#hold-button").click(function(){
     clickedRollOrHold = 'hold';
-    playGame(players, clickedRollOrHold);
+    players = playGame(players, clickedRollOrHold);
   });
 });
