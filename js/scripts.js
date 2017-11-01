@@ -28,12 +28,14 @@ function playGame(players, clickedRollOrHold){
       players[currentPlayer].tempScore = 0;
       players = endTurn(players);
     }
+    console.log(players[currentPlayer].tempScore);
   }
   if (clickedRollOrHold === 'hold') {
     players[currentPlayer].score += players[currentPlayer].tempScore;
     players[currentPlayer].tempScore = 0;
     players = endTurn(players);
   }
+  return players;
 }
 
 // FRONT END
@@ -57,9 +59,11 @@ $(function(){
   $("button#roll-button").click(function(){
     console.log(players.player1.score);
     clickedRollOrHold = 'roll';
-    playGame(players, clickedRollOrHold);
+    players = playGame(players, clickedRollOrHold);
     $('#player-1-score-span').text(players.player1.score);
     $('#player-2-score-span').text(players.player2.score);
+    $('#temp-score-span').text(players.player1.tempScore);
+    $('#temp-score-span').text(players.player2.tempScore);
   });
   $("button#hold-button").click(function(){
     clickedRollOrHold = 'hold';
