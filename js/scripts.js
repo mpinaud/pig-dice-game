@@ -1,6 +1,6 @@
-function rollDice(){
-  var randomRoll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
-  return randomRoll;
+function rollDice(players){
+  players.roll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
+  return players;
 }
 
 function Player(playerName){
@@ -19,9 +19,9 @@ function endTurn(players){
 
 function playGame(players, clickedRollOrHold){
   if (clickedRollOrHold === 'roll') {
-    var numberRolled = rollDice();
-    if (numberRolled > 1) {
-      players.tempScore += numberRolled;
+    players = rollDice(players);
+    if (players.roll > 1) {
+      players.tempScore += players.roll;
     } else {
       players.tempScore = 0;
       players = endTurn(players);
@@ -53,6 +53,7 @@ $(function(){
     players.player2 = new Player(player2Name);
     players.turn = 'player1';
     players.tempScore = 0;
+    players.roll = 0;
     $(".to-show").show();
     $(".to-hide").hide();
   });
