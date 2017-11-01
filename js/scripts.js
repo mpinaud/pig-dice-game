@@ -9,7 +9,7 @@ function Player(playerName){
 }
 
 function endTurn(players){
-  if (players.turn = 'player1'){
+  if (players.turn === 'player1'){
     players.turn = 'player2';
   } else {
     players.turn = 'player1';
@@ -18,7 +18,6 @@ function endTurn(players){
 }
 
 function playGame(players, clickedRollOrHold){
-  var currentPlayer = players.turn;
   if (clickedRollOrHold === 'roll') {
     var numberRolled = rollDice();
     if (numberRolled > 1) {
@@ -29,7 +28,8 @@ function playGame(players, clickedRollOrHold){
     }
   }
   if (clickedRollOrHold === 'hold') {
-    players[currentPlayer].score += players.tempScore;
+    var currPlayer = players.turn;
+    players[currPlayer].score += players.tempScore;
     players.tempScore = 0;
     players = endTurn(players);
   }
