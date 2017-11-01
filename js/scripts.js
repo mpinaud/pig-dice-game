@@ -32,6 +32,8 @@ function playGame(players, clickedRollOrHold){
     players[currPlayer].score += players.tempScore;
     players.tempScore = 0;
     players = endTurn(players);
+    console.log(players);
+    console.log(players[currPlayer].score);
   }
   return players;
 }
@@ -60,9 +62,18 @@ $(function(){
     $('#player-1-score-span').text(players.player1.score);
     $('#player-2-score-span').text(players.player2.score);
     $('#temp-score-span').text(players.tempScore);
+    var currPlayer = players.turn;
+    $('#current-player-span').text(players[currPlayer].name);
+    $('#current-roll-span').text(players.roll);
   });
   $("button#hold-button").click(function(){
     clickedRollOrHold = 'hold';
     players = playGame(players, clickedRollOrHold);
+    $('#player-1-score-span').text(players.player1.score);
+    $('#player-2-score-span').text(players.player2.score);
+    $('#temp-score-span').text(players.tempScore);
+    var currPlayer = players.turn;
+    $('#current-player-span').text(players[currPlayer].name);
+    $('#current-roll-span').text(players.roll);
   });
 });
