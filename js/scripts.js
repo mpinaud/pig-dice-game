@@ -1,12 +1,11 @@
 function rollDice(){
-  var randomRoll = Math.floor(Math.random()) + 1; // (0 - 0.9999999) * 6
+  var randomRoll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
   return randomRoll;
 }
 
 function Player(playerName){
   this.name = playerName;
   this.score = 0;
-  this.tempScore = 0;
 }
 
 function endTurn(players){
@@ -23,16 +22,15 @@ function playGame(players, clickedRollOrHold){
   if (clickedRollOrHold === 'roll') {
     var numberRolled = rollDice();
     if (numberRolled > 1) {
-      players[currentPlayer].tempScore += numberRolled;
+      players.tempScore += numberRolled;
     } else {
-      players[currentPlayer].tempScore = 0;
+      players.tempScore = 0;
       players = endTurn(players);
     }
-    console.log(players[currentPlayer].tempScore);
   }
   if (clickedRollOrHold === 'hold') {
-    players[currentPlayer].score += players[currentPlayer].tempScore;
-    players[currentPlayer].tempScore = 0;
+    players[currentPlayer].score += players.tempScore;
+    players.tempScore = 0;
     players = endTurn(players);
   }
   return players;
@@ -52,18 +50,16 @@ $(function(){
     players.player1 = new Player(player1Name);
     players.player2 = new Player(player2Name);
     players.turn = 'player1';
+    players.tempScore = 0;
     $(".to-show").show();
     $(".to-hide").hide();
-    console.log(players);
   });
   $("button#roll-button").click(function(){
-    console.log(players.player1.score);
     clickedRollOrHold = 'roll';
     players = playGame(players, clickedRollOrHold);
     $('#player-1-score-span').text(players.player1.score);
     $('#player-2-score-span').text(players.player2.score);
-    $('#temp-score-span').text(players.player1.tempScore);
-    $('#temp-score-span').text(players.player2.tempScore);
+    $('#temp-score-span').text(players.tempScore);
   });
   $("button#hold-button").click(function(){
     clickedRollOrHold = 'hold';
