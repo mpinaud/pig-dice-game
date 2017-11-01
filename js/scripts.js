@@ -39,7 +39,7 @@ function playGame(players, clickedRollOrHold){
 // FRONT END
 
 $(function(){
-  var players;
+  var players = {};
   var clickedRollOrHold;
   $("button#play-button").click(function(){
     players = {};
@@ -50,16 +50,16 @@ $(function(){
     players.player1 = new Player(player1Name);
     players.player2 = new Player(player2Name);
     players.turn = 'player1';
+    $(".to-show").show();
+    $(".to-hide").hide();
     console.log(players);
   });
-  $("button#start-game-button").click(function(){
-    // $("").hide() // hide upper area
-    // show lower game area
-  });
   $("button#roll-button").click(function(){
+    console.log(players.player1.score);
     clickedRollOrHold = 'roll';
-    players = playGame(players, clickedRollOrHold);
-
+    playGame(players, clickedRollOrHold);
+    $('#player-1-score-span').text(players.player1.score);
+    $('#player-2-score-span').text(players.player2.score);
   });
   $("button#hold-button").click(function(){
     clickedRollOrHold = 'hold';
