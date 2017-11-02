@@ -65,8 +65,9 @@ $(function(){
     coinToss(pigDice);
     var currPlayer = pigDice.turn;
     $('#current-player-span').text(pigDice[currPlayer].name);
-    $(".to-show").show();
-    $(".to-hide").hide();
+    $("#gameplay-div").show();
+    $("#player-info-div").hide();
+    $("#victory-div").hide();
   });
   $("button").click(function(){
     if ($(this).attr("id") === "roll-button") {
@@ -81,16 +82,18 @@ $(function(){
     var currPlayer = pigDice.turn;
     $('#current-player-span').text(pigDice[currPlayer].name);
     $('#current-roll-span').text(pigDice.roll);
-    if (pigDice.player1.score >= 20){
+    if (pigDice.player1.score >= 10){
       $("#victory-div").show();
-      $("#victory-name").text(pigDice.player1.name);
-    } else if (pigDice.player2.score >= 20){
+      var victoryMessage = pigDice.player1.name + " by " + String(pigDice.player1.score - pigDice.player2.score) + " points!";
+      $("#victory-name").text(victoryMessage);
+      $("#player-info-div").show();
+      $("#gameplay-div").hide();
+    } else if (pigDice.player2.score >= 10){
       $("#victory-div").show();
-      $("#victory-name").text(pigDice.player2.name);
+      var victoryMessage = pigDice.player2.name + " by " + String(pigDice.player2.score - pigDice.player1.score) + " points!";
+      $("#victory-name").text(victoryMessage);
+      $("#player-info-div").show();
+      $("#gameplay-div").hide();
     }
   });
-  $("#victory-img").click(function(){
-
-
-  })
 });

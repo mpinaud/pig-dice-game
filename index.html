@@ -11,7 +11,7 @@
   <body>
     <div class="container">
       <!-- name entry area to hide when game starts -->
-      <div class="to-hide">
+      <div id="player-info-div">
         <div class="row">
           <div class="col">
             <input id="player-1-name-input" type="text">
@@ -28,7 +28,7 @@
       </div>
       <!-- end start area -->
       <!-- shows when play is clicked -->
-      <div class="to-show">
+      <div id="gameplay-div">
         <div class="row">
           <div class="col-6">
             <h2><span id="player-1-name-span"></span></h2>
@@ -54,12 +54,12 @@
             <button type="button" id="hold-button">Hold!</button>
           </div>
         </div>
-        <div id="victory-div">
-          <img id="victory-img" src="" alt="">
-          <h1>You Win <span id="victory-name"></span>!!!</h1>
-        </div>
       </div>
       <!-- end of play area -->
+      <div id="victory-div">
+        <img id="victory-img" src="" alt="">
+        <h1>You Win <span id="victory-name"></span>!!!</h1>
+      </div>
     </div>
   </body>
 </html>

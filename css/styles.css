@@ -1,10 +1,9 @@
-.to-hide {
+#player-info-div {
 
 }
-.to-show {
+#gameplay-div {
   display: none;
 }
-
 #victory-div {
   display: none;
 }
