@@ -14,11 +14,11 @@
       <div id="player-info-div">
         <h1 class="display-1">Pig Dice!</h1>
         <div class="row">
-          <div class="col player-1-area p-5 m-1 rounded">
+          <div class="col player-area player-1-color">
             <h3>Player 1:</h3>
             <input id="player-1-name-input" type="text">
           </div>
-          <div class="col player-2-area p-5 m-1 rounded">
+          <div class="col player-area player-2-color">
             <h3>Player 2:</h3>
             <input id="player-2-name-input" type="text">
           </div>
@@ -33,12 +33,12 @@
       <!-- shows when play is clicked -->
       <div id="gameplay-div" class="mt-5">
         <div class="row">
-          <div class="col-6">
+          <div class="col-6 player-area player-1-color">
             <h2><span id="player-1-name-span"></span></h2>
             <p>Score</p>
             <h1><span id="player-1-score-span">0</span></h1>
           </div>
-          <div class="col-6">
+          <div class="col-6 player-area player-2-color">
             <h2><span id="player-2-name-span"></span></h2>
             <p>Score</p>
             <h1><span id="player-2-score-span">0</span></h1>
@@ -53,8 +53,8 @@
         </div>
         <div class="row">
           <div class="col">
-            <button type="button" id="roll-button">Roll!</button>
-            <button type="button" id="hold-button">Hold!</button>
+            <button type="button" class="btn btn-lg mt-5" id="roll-button">Roll!</button>
+            <button type="button" class="btn btn-lg mt-5" id="hold-button">Hold!</button>
           </div>
         </div>
       </div>

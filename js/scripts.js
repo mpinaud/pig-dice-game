@@ -13,7 +13,7 @@ function rollDice(pigDice){
   return pigDice;
 }
 
-function Player(playerName){
+function Player(playerName){ 
   this.name = playerName;
   this.score = 0;
 }

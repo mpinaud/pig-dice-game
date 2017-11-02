@@ -7,9 +7,15 @@
 #victory-div {
   display: none;
 }
-.player-1-area {
+.player-area {
+  padding: 25px;
+  max-width: 48%;
+  margin: 1%;
+  border-radius: 5px;
+}
+.player-1-color {
   background-color: #FAA;
 }
-.player-2-area {
+.player-2-color {
   background-color: #AAF;
 }
