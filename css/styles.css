@@ -7,6 +7,10 @@
 #victory-div {
   display: none;
 }
+
+#hall-of-fame {
+  margin-top: 100px;
+}
 .player-area {
   padding: 25px;
   max-width: 48%;

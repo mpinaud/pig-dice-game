@@ -1,22 +1,31 @@
-function coinToss(pigDice){
-  var toss = Math.random();
-  if (toss > 0.5) {
-    pigDice.turn = 'player1';
-  } else {
-    pigDice.turn = 'player2';
-  }
-  return pigDice;
-}
-
-function rollDice(pigDice){
-  pigDice.roll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
-  return pigDice;
-}
-
-function Player(playerName){ 
+function Player(playerName){
   this.name = playerName;
   this.score = 0;
 }
+
+function PigDice(player1Name, player2Name){
+  this.tempScore = 0;
+  this.player1 = new Player(player1Name); // new is a command that creates a new oject from Player Constructor
+  this.player2 = new Player(player2Name);
+  this.action = '';
+}
+
+PigDice.prototype.coinToss = function () {
+  var toss = Math.random();
+  if (toss > 0.5) {
+    this.turn = 'player1';
+  } else {
+    this.turn = 'player2';
+  }
+};
+
+PigDice.prototype.rollDice = function () {
+    this.roll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
+};
+// function rollDice(pigDice){
+//   pigDice.roll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
+//   return pigDice;
+// }
 
 function endTurn(pigDice){
   if (pigDice.turn === 'player1'){
@@ -28,8 +37,8 @@ function endTurn(pigDice){
 }
 
 function playGame(pigDice){
-  if ( pigDice.action === 'roll') {
-    pigDice = rollDice(pigDice);
+  if (pigDice.action === 'roll') {
+    pigDice.rollDice();
     if (pigDice.roll > 1) {
       pigDice.tempScore += pigDice.roll;
     } else {
@@ -42,8 +51,6 @@ function playGame(pigDice){
     pigDice[currPlayer].score += pigDice.tempScore;
     pigDice.tempScore = 0;
     pigDice = endTurn(pigDice);
-    console.log(pigDice);
-    console.log(pigDice[currPlayer].score);
   }
   return pigDice;
 }
@@ -51,23 +58,20 @@ function playGame(pigDice){
 // FRONT END
 
 $(function(){ // greater function
-  var pigDice = {}; // creates grandpooba object (in the greater function scope) to collect game info (as properties) so it can carry them into functions and change stuff
+  var pigDice = {};
+  var hallOfFame = [];
   $("button#play-button").click(function(){
-    pigDice = {}; //empties out grandpooba object for new game after button clicked
     var player1Name = $("#player-1-name-input").val();
     var player2Name = $("#player-2-name-input").val();
     $('span#player-1-name-span').text(player1Name);
     $('span#player-2-name-span').text(player2Name);
-    pigDice.player1 = new Player(player1Name); // new is a command that creates a new oject from Player Constructor
-    pigDice.player2 = new Player(player2Name);
-    pigDice.roll = 0;
-    pigDice.tempScore = 0;
-    coinToss(pigDice);
+    pigDice = new PigDice(player1Name, player2Name); // creates grandpooba object (in the greater function scope) to collect game info (as properties) so it can carry them into functions and change stuff
+    pigDice.coinToss();
     var currPlayer = pigDice.turn;
     $('#current-player-span').text(pigDice[currPlayer].name);
     $("#gameplay-div").slideDown();
     $("#player-info-div").slideUp();
-    $("#victory-div").hide();
+    $("#victory-div").slideUp();
   });
   $("button").click(function(){
     if ($(this).attr("id") === "roll-button") {
@@ -82,19 +86,27 @@ $(function(){ // greater function
     var currPlayer = pigDice.turn;
     $('#current-player-span').text(pigDice[currPlayer].name);
     $('#current-roll-span').text(pigDice.roll);
-    if (pigDice.player1.score >= 50 || pigDice.player2.score >= 50){
-      if (pigDice.player1.score >= 50) {
+    if (pigDice.player1.score >= 24 || pigDice.player2.score >= 24){
+      if (pigDice.player1.score >= 24) {
         var winner = 'player1';
         var loser = 'player2';
       } else {
         var winner = 'player2';
         var loser = 'player1';
       }
-      $("#victory-div").show();
+      $("#victory-div").slideDown();
       var victoryMessage = pigDice[winner].name + " wins by " + String(pigDice[winner].score - pigDice[loser].score) + " points!";
       $("#victory-name").text(victoryMessage);
-      $("#player-info-div").show();
-      $("#gameplay-div").hide();
+      $("#player-info-div").slideDown();
+      $("#gameplay-div").slideUp();
+      var hallOfFameWinner = {};
+      hallOfFameWinner.name = pigDice[winner].name;
+      hallOfFameWinner.score = pigDice[winner].score;
+      hallOfFame.push(hallOfFameWinner);
+      $("#hall-of-fame").empty();
+      hallOfFame.forEach(function(winner){
+        $("#hall-of-fame").append(winner.name + " " + winner.score + "<br>");
+      });
     }
   });
 });
