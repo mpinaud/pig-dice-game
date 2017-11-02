@@ -4,3 +4,7 @@
 .to-show {
   display: none;
 }
+
+#victory-div {
+  display: none;
+}

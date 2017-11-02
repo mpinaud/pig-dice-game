@@ -81,5 +81,16 @@ $(function(){
     var currPlayer = pigDice.turn;
     $('#current-player-span').text(pigDice[currPlayer].name);
     $('#current-roll-span').text(pigDice.roll);
+    if (pigDice.player1.score >= 20){
+      $("#victory-div").show();
+      $("#victory-name").text(pigDice.player1.name);
+    } else if (pigDice.player2.score >= 20){
+      $("#victory-div").show();
+      $("#victory-name").text(pigDice.player2.name);
+    }
   });
+  $("#victory-img").click(function(){
+
+
+  })
 });
