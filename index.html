@@ -9,28 +9,29 @@
     <title>Pig Dice</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container text-center">
       <!-- name entry area to hide when game starts -->
       <div id="player-info-div">
+        <h1 class="display-1">Pig Dice!</h1>
         <div class="row">
-          <div class="col">
+          <div class="col player-1-area p-5 m-1 rounded">
             <h3>Player 1:</h3>
             <input id="player-1-name-input" type="text">
           </div>
-          <div class="col">
+          <div class="col player-2-area p-5 m-1 rounded">
             <h3>Player 2:</h3>
             <input id="player-2-name-input" type="text">
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <button id="play-button" class="btn btn-lg" type="button">PLAY!</button>
+            <button id="play-button" class="btn btn-lg mt-5" type="button">PLAY!</button>
           </div>
         </div>
       </div>
       <!-- end start area -->
       <!-- shows when play is clicked -->
-      <div id="gameplay-div">
+      <div id="gameplay-div" class="mt-5">
         <div class="row">
           <div class="col-6">
             <h2><span id="player-1-name-span"></span></h2>

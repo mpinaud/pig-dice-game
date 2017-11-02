@@ -65,8 +65,8 @@ $(function(){ // greater function
     coinToss(pigDice);
     var currPlayer = pigDice.turn;
     $('#current-player-span').text(pigDice[currPlayer].name);
-    $("#gameplay-div").show();
-    $("#player-info-div").hide();
+    $("#gameplay-div").slideDown();
+    $("#player-info-div").slideUp();
     $("#victory-div").hide();
   });
   $("button").click(function(){

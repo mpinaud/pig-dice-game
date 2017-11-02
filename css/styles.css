@@ -1,9 +1,15 @@
 #player-info-div {
-
+  margin-top: 200px;
 }
 #gameplay-div {
   display: none;
 }
 #victory-div {
   display: none;
+}
+.player-1-area {
+  background-color: #FAA;
+}
+.player-2-area {
+  background-color: #AAF;
 }
