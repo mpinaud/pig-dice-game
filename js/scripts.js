@@ -27,8 +27,8 @@ function endTurn(pigDice){
   return pigDice;
 }
 
-function playGame(pigDice, clickedRollOrHold){
-  if (clickedRollOrHold === 'roll') {
+function playGame(pigDice){
+  if ( pigDice.action === 'roll') {
     pigDice = rollDice(pigDice);
     if (pigDice.roll > 1) {
       pigDice.tempScore += pigDice.roll;
@@ -37,7 +37,7 @@ function playGame(pigDice, clickedRollOrHold){
       pigDice = endTurn(pigDice);
     }
   }
-  if (clickedRollOrHold === 'hold') {
+  if ( pigDice.action === 'hold') {
     var currPlayer = pigDice.turn;
     pigDice[currPlayer].score += pigDice.tempScore;
     pigDice.tempScore = 0;
@@ -52,14 +52,13 @@ function playGame(pigDice, clickedRollOrHold){
 
 $(function(){
   var pigDice = {};
-  var clickedRollOrHold;
   $("button#play-button").click(function(){
     pigDice = {};
     var player1Name = $("#player-1-name-input").val();
     var player2Name = $("#player-2-name-input").val();
     $('span#player-1-name-span').text(player1Name);
     $('span#player-2-name-span').text(player2Name);
-    pigDice.player1 = new Player(player1Name);
+    pigDice.player1 = new Player(player1Name); // new is a command that creates a new oject from Player Constructor
     pigDice.player2 = new Player(player2Name);
     pigDice.roll = 0;
     pigDice.tempScore = 0;
@@ -69,19 +68,13 @@ $(function(){
     $(".to-show").show();
     $(".to-hide").hide();
   });
-  $("button#roll-button").click(function(){
-    clickedRollOrHold = 'roll';
-    pigDice = playGame(pigDice, clickedRollOrHold);
-    $('#player-1-score-span').text(pigDice.player1.score);
-    $('#player-2-score-span').text(pigDice.player2.score);
-    $('#temp-score-span').text(pigDice.tempScore);
-    var currPlayer = pigDice.turn;
-    $('#current-player-span').text(pigDice[currPlayer].name);
-    $('#current-roll-span').text(pigDice.roll);
-  });
-  $("button#hold-button").click(function(){
-    clickedRollOrHold = 'hold';
-    pigDice = playGame(pigDice, clickedRollOrHold);
+  $("button").click(function(){
+    if ($(this).attr("id") === "roll-button") {
+      pigDice.action = "roll";
+    } else if ($(this).attr("id") === "hold-button"){
+      pigDice.action = "hold";
+    }
+    pigDice = playGame(pigDice);
     $('#player-1-score-span').text(pigDice.player1.score);
     $('#player-2-score-span').text(pigDice.player2.score);
     $('#temp-score-span').text(pigDice.tempScore);
