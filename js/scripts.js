@@ -50,10 +50,10 @@ function playGame(pigDice){
 
 // FRONT END
 
-$(function(){
-  var pigDice = {};
+$(function(){ // greater function
+  var pigDice = {}; // creates grandpooba object (in the greater function scope) to collect game info (as properties) so it can carry them into functions and change stuff
   $("button#play-button").click(function(){
-    pigDice = {};
+    pigDice = {}; //empties out grandpooba object for new game after button clicked
     var player1Name = $("#player-1-name-input").val();
     var player2Name = $("#player-2-name-input").val();
     $('span#player-1-name-span').text(player1Name);
@@ -82,15 +82,16 @@ $(function(){
     var currPlayer = pigDice.turn;
     $('#current-player-span').text(pigDice[currPlayer].name);
     $('#current-roll-span').text(pigDice.roll);
-    if (pigDice.player1.score >= 10){
+    if (pigDice.player1.score >= 50 || pigDice.player2.score >= 50){
+      if (pigDice.player1.score >= 50) {
+        var winner = 'player1';
+        var loser = 'player2';
+      } else {
+        var winner = 'player2';
+        var loser = 'player1';
+      }
       $("#victory-div").show();
-      var victoryMessage = pigDice.player1.name + " by " + String(pigDice.player1.score - pigDice.player2.score) + " points!";
-      $("#victory-name").text(victoryMessage);
-      $("#player-info-div").show();
-      $("#gameplay-div").hide();
-    } else if (pigDice.player2.score >= 10){
-      $("#victory-div").show();
-      var victoryMessage = pigDice.player2.name + " by " + String(pigDice.player2.score - pigDice.player1.score) + " points!";
+      var victoryMessage = pigDice[winner].name + " wins by " + String(pigDice[winner].score - pigDice[loser].score) + " points!";
       $("#victory-name").text(victoryMessage);
       $("#player-info-div").show();
       $("#gameplay-div").hide();
