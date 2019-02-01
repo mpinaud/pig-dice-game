@@ -5,7 +5,7 @@ function Player(playerName){
 
 function PigDice(player1Name, player2Name){
   this.tempScore = 0;
-  this.player1 = new Player(player1Name); // new is a command that creates a new oject from Player Constructor
+  this.player1 = new Player(player1Name);
   this.player2 = new Player(player2Name);
   this.action = '';
 }
@@ -22,10 +22,6 @@ PigDice.prototype.coinToss = function () {
 PigDice.prototype.rollDice = function () {
     this.roll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
 };
-// function rollDice(pigDice){
-//   pigDice.roll = Math.floor(Math.random() * 6) + 1; // (0 - 0.9999999) * 6
-//   return pigDice;
-// }
 
 function endTurn(pigDice){
   if (pigDice.turn === 'player1'){
@@ -65,7 +61,7 @@ $(function(){ // greater function
     var player2Name = $("#player-2-name-input").val();
     $('span#player-1-name-span').text(player1Name);
     $('span#player-2-name-span').text(player2Name);
-    pigDice = new PigDice(player1Name, player2Name); // creates grandpooba object (in the greater function scope) to collect game info (as properties) so it can carry them into functions and change stuff
+    pigDice = new PigDice(player1Name, player2Name);
     pigDice.coinToss();
     var currPlayer = pigDice.turn;
     $('#current-player-span').text(pigDice[currPlayer].name);
